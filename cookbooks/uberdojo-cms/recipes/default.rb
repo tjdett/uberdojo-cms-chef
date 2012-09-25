@@ -7,7 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "git"
 include_recipe "yum::epel"
 
 package 'nginx'
@@ -28,5 +27,4 @@ template "/etc/nginx/conf.d/default.conf" do
   notifies :restart, "service[nginx]"
 end
 
-gem "jekyll"
 
