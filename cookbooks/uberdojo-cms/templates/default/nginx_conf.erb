@@ -9,8 +9,8 @@ server {
     #
     location / {
         proxy_pass   http://swift.rc.nectar.org.au:8888;
-        rewrite /(.*)$ /v1/AUTH_149/foo/$1 break;
-        index  index.html index.htm;
+        rewrite (.*)/$ $1/index.html;
+        rewrite /(.*)$ /v1/AUTH_36c4c535b77a4795992b3f907f797929/steve-dojo/_site/$1 break;
     }
 
     error_page  404              /404.html;
