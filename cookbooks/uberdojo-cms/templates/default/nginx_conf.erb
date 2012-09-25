@@ -8,21 +8,24 @@ server {
     # proxy the requests to Swift object store
     #
     location / {
-        proxy_pass   http://swift.rc.nectar.org.au:8888;
-        rewrite (.*)/$ $1/index.html;
-        rewrite /(.*)$ /v1/AUTH_36c4c535b77a4795992b3f907f797929/steve-dojo/_site/$1 break;
+      proxy_pass   http://swift.rc.nectar.org.au:8888;
+      rewrite (.*)/$ $1/index.html;
+      if ($host ~* "^(.*).uberdojo-cms.dettrick.net$") {
+          set $bucket $1;
+      }
+      rewrite /(.*)$ /v1/AUTH_36c4c535b77a4795992b3f907f797929/$bucket/_site/$1 break;
     }
 
     error_page  404              /404.html;
     location = /404.html {
-        root   /usr/share/nginx/html;
+      root   /usr/share/nginx/html;
     }
 
     # redirect server error pages to the static page /50x.html
     #
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
-        root   /usr/share/nginx/html;
+      root   /usr/share/nginx/html;
     }
 
 
